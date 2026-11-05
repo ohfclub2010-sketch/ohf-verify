@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Heart Friends Club - সদস্যপদ যাচাই</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Hind Siliguri', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    }
+    body {
+      background: linear-gradient(135deg, #0b1f3a 0%, #102a4d 50%, #0d3b66 100%);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 16px;
+      color: #1e293b;
+    }
+    .container {
+      width: 100%;
+      max-width: 440px;
+      background: #ffffff;
+      border-radius: 24px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .header {
+      background: linear-gradient(135deg, #0d3b66 0%, #0284c7 100%);
+      padding: 24px 20px;
+      text-align: center;
+      color: #ffffff;
+      position: relative;
+    }
+    .logo-badge {
+      width: 68px;
+      height: 68px;
+      border-radius: 50%;
+      background: #ffffff;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 10px;
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+      border: 2px solid #38bdf8;
+    }
+    .logo-badge svg {
+      width: 44px;
+      height: 44px;
+    }
+    .club-title {
+      font-size: 20px;
+      font-weight: 700;
+      letter-spacing: 0.3px;
+    }
+    .club-subtitle {
+      font-size: 13px;
+      color: #bae6fd;
+      margin-top: 4px;
+      font-weight: 500;
+    }
+    .content {
+      padding: 24px 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    .status-banner {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 17px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .status-approved {
+      background: #ecfdf5;
+      color: #047857;
+      border: 1.5px solid #10b981;
+    }
+    .status-invalid {
+      background: #fef2f2;
+      color: #b91c1c;
+      border: 1.5px solid #ef4444;
+    }
+    .status-notfound {
+      background: #fffbeb;
+      color: #b45309;
+      border: 1.5px solid #f59e0b;
+    }
+    .status-loading {
+      background: #f1f5f9;
+      color: #475569;
+      border: 1.5px solid #cbd5e1;
+    }
+    .avatar-wrapper {
+      position: relative;
+      margin-bottom: 14px;
+    }
+    .avatar {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 4px solid #10b981;
+      background: #e2e8f0;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+    .avatar.invalid {
+      border-color: #ef4444;
+    }
+    .avatar-initial {
+      width: 96px;
+      height: 96px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #0284c7 0%, #0d3b66 100%);
+      color: #ffffff;
+      font-size: 38px;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 4px solid #10b981;
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+    }
+    .avatar-initial.invalid {
+      border-color: #ef4444;
+      background: linear-gradient(135deg, #ef4444 0%, #991b1b 100%);
+    }
+    .member-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #0f172a;
+      margin-bottom: 4px;
+    }
+    .designation-badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 4px 14px;
+      border-radius: 999px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 18px;
+    }
+    .info-card {
+      width: 100%;
+      background: #f8fafc;
+      border-radius: 16px;
+      padding: 16px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+      margin-bottom: 18px;
+    }
+    .info-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 14px;
+      padding-bottom: 8px;
+      border-bottom: 1px dashed #cbd5e1;
+    }
+    .info-row:last-child {
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    .info-label {
+      color: #64748b;
+      font-weight: 500;
+    }
+    .info-value {
+      font-weight: 700;
+      color: #0f172a;
+    }
+    .blood-badge {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+      font-size: 13px;
+    }
+    .verified-time {
+      font-size: 12px;
+      color: #64748b;
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+    .privacy-notice {
+      margin-top: 14px;
+      font-size: 11px;
+      color: #94a3b8;
+      line-height: 1.5;
+    }
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #0284c7;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      animation: spin 1s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .footer {
+      background: #f1f5f9;
+      padding: 14px;
+      text-align: center;
+      font-size: 12px;
+      color: #64748b;
+      border-top: 1px solid #e2e8f0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <!-- Header -->
+    <div class="header">
+      <div class="logo-badge">
+        <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="50" cy="50" r="45" fill="#0284c7"/>
+          <path d="M50 72C50 72 26 55 26 38C26 29 33 24 41 24C46 24 49 27 50 29C51 27 54 24 59 24C67 24 74 29 74 38C74 55 50 72 50 72Z" fill="#ef4444"/>
+          <circle cx="43" cy="40" r="4" fill="#ffffff"/>
+          <circle cx="57" cy="40" r="4" fill="#ffffff"/>
+        </svg>
+      </div>
+      <h1 class="club-title">One Heart Friends Club</h1>
+      <p class="club-subtitle">ডিজিটাল সদস্যপদ অনলাইন যাচাই ব্যবস্থা</p>
+    </div>
+
+    <!-- Main Content -->
+    <div class="content" id="mainContent">
+      <div class="spinner" id="loadingSpinner"></div>
+      <p id="loadingText" style="color: #64748b; font-size: 14px;">তথ্য যাচাই করা হচ্ছে, অনুগ্রহ করে অপেক্ষা করুন...</p>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      &copy; 2026 One Heart Friends Club | সর্বস্বত্ব সংরক্ষিত
+    </div>
+  </div>
+
+  <!-- Firebase SDKs (Compat for simple static CDN hosting) -->
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore-compat.js"></script>
+
+  <script>
+    // Firebase Configuration for OHF Club
+    const firebaseConfig = {
+      apiKey: "AIzaSyAGbyDUftOk77ZrddfYJOni3Xdasicrogs",
+      authDomain: "ohf-club-2026.firebaseapp.com",
+      projectId: "ohf-club-2026",
+      storageBucket: "ohf-club-2026.firebasestorage.app",
+      messagingSenderId: "1024778636539",
+      appId: "1:1024778636539:android:efde8cfbe44fa7771b745e"
+    };
+
+    // Initialize Firebase
+    if (!firebase.apps.length) {
+      firebase.initializeApp(firebaseConfig);
+    }
+    const db = firebase.firestore();
+
+    // Helper: Bangla digits & date formatting
+    const banglaDigits = {'0':'০','1':'১','2':'২','3':'৩','4':'৪','5':'৫','6':'৬','7':'৭','8':'৮','9':'৯'};
+    function toBanglaNumber(str) {
+      if (!str) return '';
+      return String(str).replace(/[0-9]/g, function(w){ return banglaDigits[w] || w; });
+    }
+
+    function formatBengaliDate(timestamp) {
+      if (!timestamp) return 'অজানা';
+      const date = new Date(timestamp);
+      const months = [
+        "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+        "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
+      ];
+      const day = toBanglaNumber(date.getDate());
+      const month = months[date.getMonth()];
+      const year = toBanglaNumber(date.getFullYear());
+      return `${day} ${month}, ${year}`;
+    }
+
+    function getCurrentBengaliDateTime() {
+      const date = new Date();
+      const months = [
+        "জানুয়ারি", "ফেব্রুয়ারি", "মার্চ", "এপ্রিল", "মে", "জুন",
+        "জুলাই", "আগস্ট", "সেপ্টেম্বর", "অক্টোবর", "নভেম্বর", "ডিসেম্বর"
+      ];
+      const day = toBanglaNumber(date.getDate());
+      const month = months[date.getMonth()];
+      const year = toBanglaNumber(date.getFullYear());
+      let hours = date.getHours();
+      const ampm = hours >= 12 ? 'অপরাহ্ন' : 'পূর্বাহ্ন';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      const minutes = String(date.getMinutes()).padStart(2, '0');
+      return `${day} ${month}, ${year} | ${ampm} ${toBanglaNumber(hours)}:${toBanglaNumber(minutes)}`;
+    }
+
+    // Extract query parameter ?id=...
+    const urlParams = new URLSearchParams(window.location.search);
+    const token = (urlParams.get('id') || '').trim();
+
+    const mainContent = document.getElementById('mainContent');
+
+    function renderNotFound() {
+      mainContent.innerHTML = `
+        <div class="status-banner status-notfound">
+          ⚠ কোনো সদস্য পাওয়া যায়নি
+        </div>
+        <p style="color: #b45309; font-size: 15px; font-weight: 600; margin-bottom: 8px;">
+          এই কার্ডটি ভুয়া অথবা বাতিল হতে পারে
+        </p>
+        <p style="color: #64748b; font-size: 13px; margin-bottom: 16px;">
+          প্রদত্ত কিউআর কোড বা যাচাই টোকেনের সাথে ডাটাবেজের কোনো অনুমোদিত রেকর্ডের মিল পাওয়া যায়নি।
+        </p>
+        <div class="verified-time">
+          🕒 যাচাইয়ের সময়: ${getCurrentBengaliDateTime()}
+        </div>
+      `;
+    }
+
+    function renderMember(data) {
+      const isApproved = (data.status === 'APPROVED');
+      const bannerClass = isApproved ? 'status-approved' : 'status-invalid';
+      const bannerText = isApproved ? '✓ যাচাইকৃত সদস্য' : '✗ এই সদস্যপদ বৈধ নয়';
+      const statusTitle = isApproved ? 'অনুমোদিত ও সক্রিয়' : (data.status === 'PENDING' ? 'অনুমোদনের অপেক্ষায়' : (data.status === 'SUSPENDED' ? 'স্থগিতকৃত' : 'বাতিলকৃত'));
+
+      const avatarHtml = data.photoUrl ? `
+        <img class="avatar ${isApproved ? '' : 'invalid'}" src="${data.photoUrl}" alt="${data.name}" onerror="this.onerror=null;this.parentElement.innerHTML='<div class=\\'avatar-initial ${isApproved ? '' : 'invalid'}\\'>${(data.name || 'স').charAt(0)}</div>';">
+      ` : `
+        <div class="avatar-initial ${isApproved ? '' : 'invalid'}">
+          ${(data.name || 'স').charAt(0)}
+        </div>
+      `;
+
+      mainContent.innerHTML = `
+        <div class="status-banner ${bannerClass}">
+          ${bannerText}
+        </div>
+
+        <div class="avatar-wrapper">
+          ${avatarHtml}
+        </div>
+
+        <h2 class="member-name">${data.name || 'সদস্য'}</h2>
+        <div class="designation-badge">${data.designation || 'সাধারণ সদস্য'}</div>
+
+        <div class="info-card">
+          <div class="info-row">
+            <span class="info-label">সদস্য আইডি</span>
+            <span class="info-value" style="font-family: monospace; letter-spacing: 0.5px; color: #0284c7;">
+              ${data.memberId || 'N/A'}
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">রক্তের গ্রুপ</span>
+            <span class="info-value">
+              <span class="blood-badge">${data.bloodGroup || 'অজানা'}</span>
+            </span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">যোগদানের তারিখ</span>
+            <span class="info-value">${formatBengaliDate(data.joinDate)}</span>
+          </div>
+          <div class="info-row">
+            <span class="info-label">বর্তমান অবস্থা</span>
+            <span class="info-value" style="color: ${isApproved ? '#047857' : '#b91c1c'};">
+              ${statusTitle}
+            </span>
+          </div>
+        </div>
+
+        <div class="verified-time">
+          🕒 যাচাইয়ের সময়: ${getCurrentBengaliDateTime()}
+        </div>
+
+        <div class="privacy-notice">
+          নিরাপত্তা ও গোপনীয়তা রক্ষার স্বার্থে ব্যক্তিগত মোবাইল নম্বর ও ঠিকানা সর্বসাধারণের জন্য অপ্রকাশিত রাখা হয়েছে।
+        </div>
+      `;
+    }
+
+    async function checkVerification() {
+      if (!token) {
+        renderNotFound();
+        return;
+      }
+
+      try {
+        // Query publicVerify/{token}
+        const docSnap = await db.collection('publicVerify').document(token).get();
+        if (docSnap.exists) {
+          renderMember(docSnap.data());
+          return;
+        }
+
+        // Fallback: If legacy QR code scanned with memberId
+        const queryByMemberId = await db.collection('publicVerify')
+          .where('memberId', '==', token)
+          .limit(1)
+          .get();
+
+        if (!queryByMemberId.empty) {
+          renderMember(queryByMemberId.docs[0].data());
+          return;
+        }
+
+        renderNotFound();
+      } catch (err) {
+        console.error('Verification query error:', err);
+        renderNotFound();
+      }
+    }
+
+    checkVerification();
+  </script>
+</body>
+</html>
