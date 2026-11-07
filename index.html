@@ -413,7 +413,7 @@
 
       try {
         // Query publicVerify/{token}
-        const docSnap = await db.collection('publicVerify').document(token).get();
+        const docSnap = await db.collection('publicVerify').doc(token).get();
         if (docSnap.exists) {
           renderMember(docSnap.data());
           return;
